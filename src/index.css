@@ -1,0 +1,152 @@
+:root {
+  color: #1b1b18;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  background: #f8f7f2;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: #255c73;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+a:hover {
+  color: #12313d;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-block-start: 0;
+}
+
+.site-shell {
+  width: min(100% - 2rem, 760px);
+  margin-inline: auto;
+  padding-block: 4rem;
+}
+
+.intro {
+  padding-block-end: 3rem;
+  border-bottom: 1px solid #dedbd0;
+}
+
+.intro h1,
+.post-header h1,
+.not-found h1 {
+  margin-block-end: 1rem;
+  font-size: clamp(2.25rem, 8vw, 4rem);
+  line-height: 0.96;
+}
+
+.intro p,
+.post-header p,
+.not-found p {
+  max-width: 42rem;
+  color: #4c4a43;
+  font-size: 1.08rem;
+}
+
+.eyebrow {
+  margin-block-end: 0.75rem;
+  color: #8d3f2b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.post-list {
+  display: grid;
+  gap: 1.25rem;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  list-style: none;
+}
+
+.post-preview {
+  padding-block: 1.25rem;
+  border-bottom: 1px solid #dedbd0;
+}
+
+.post-preview time,
+.post-header time {
+  display: block;
+  margin-block-end: 0.5rem;
+  color: #706d64;
+  font-size: 0.92rem;
+}
+
+.post-preview h3 {
+  margin-block-end: 0.4rem;
+  font-size: 1.45rem;
+  line-height: 1.15;
+}
+
+.post-preview p {
+  margin-block-end: 0;
+  color: #4c4a43;
+}
+
+.back-link {
+  display: inline-flex;
+  margin-block-end: 2rem;
+}
+
+.post-header {
+  padding-block-end: 2rem;
+  border-bottom: 1px solid #dedbd0;
+}
+
+.byline {
+  margin-block-start: 1rem;
+  font-size: 1rem;
+}
+
+.prose {
+  padding-block-start: 2rem;
+}
+
+.prose h1 {
+  margin-block: 0 1rem;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.prose p,
+.prose li {
+  color: #34332f;
+  font-size: 1.05rem;
+}
+
+.prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-block: 1.5rem;
+  border-radius: 8px;
+}
+
+.prose ul {
+  padding-inline-start: 1.25rem;
+}
+
+.not-found {
+  padding-block: 5rem;
+}
