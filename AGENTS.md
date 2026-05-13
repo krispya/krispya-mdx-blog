@@ -37,6 +37,6 @@ Content is pure data defined in `content/`. MDX posts and JSON metadata. Content
 
 Static assets such as images, video and 3D models are defined in `public/`. These assets need stable browser URLs, such as images and social cards. They are referenced by their public path.
 
-### Application Code
+### Client Code
 
-Application code is defined in `src/`. It is broken up into domain level features in `src/features` and an `app.tsx` entry point. Routers for the router are defined statically in `routes.ts`.
+Client code is defined in `src/`. It is broken up into domain level features in `src/features` and an `app.tsx` entry point. Routers for the router are defined statically in `routes.ts`.
