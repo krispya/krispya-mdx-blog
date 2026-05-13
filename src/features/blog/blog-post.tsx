@@ -1,6 +1,10 @@
+import { createElement, Suspense, use, type ComponentType } from 'react';
 import { Link } from 'wouter';
 import author from '../../../content/author.json';
-import { formatPostDate, getPost } from './posts.js';
+import { routes } from '../../routes.js';
+import { formatPostDate, getPost, type Post } from './posts.js';
+
+const postComponentPromises = new Map<string, Promise<ComponentType>>();
 
 export function BlogPost({ slug }: { slug: string }) {
   const post = getPost(slug);
@@ -9,13 +13,11 @@ export function BlogPost({ slug }: { slug: string }) {
     return <BlogPostNotFound />;
   }
 
-  const { Component } = post;
-
   return (
     <article>
       <Link
         className="text-primary-700 decoration-primary-200 hover:text-primary-800 hover:decoration-primary-400 mb-8 inline-flex text-sm font-medium underline"
-        href="/"
+        href={routes.home.href()}
       >
         Back to posts
       </Link>
@@ -39,10 +41,32 @@ export function BlogPost({ slug }: { slug: string }) {
         </p>
       </header>
       <div className="prose prose-gray mt-8 max-w-none">
-        <Component />
+        <Suspense fallback={<p className="text-sm text-gray-500">Loading post...</p>}>
+          <PostContent post={post} />
+        </Suspense>
       </div>
     </article>
   );
+}
+
+function PostContent({ post }: { post: Post }) {
+  const Component = use(getPostComponentPromise(post));
+
+  return createElement(Component);
+}
+
+function getPostComponentPromise(post: Post) {
+  const cachedPromise = postComponentPromises.get(post.slug);
+
+  if (cachedPromise) {
+    return cachedPromise;
+  }
+
+  const promise = post.loadComponent();
+
+  postComponentPromises.set(post.slug, promise);
+
+  return promise;
 }
 
 export function BlogPostNotFound() {
@@ -57,7 +81,7 @@ export function BlogPostNotFound() {
       </p>
       <Link
         className="text-primary-700 decoration-primary-200 hover:text-primary-800 hover:decoration-primary-400 underline"
-        href="/"
+        href={routes.home.href()}
       >
         Return to the post list
       </Link>

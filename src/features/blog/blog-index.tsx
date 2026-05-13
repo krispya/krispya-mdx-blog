@@ -1,5 +1,6 @@
 import { Link } from 'wouter';
 import author from '../../../content/author.json';
+import { routes } from '../../routes.js';
 import { formatPostDate, posts } from './posts.js';
 
 export function BlogIndex() {
@@ -32,7 +33,7 @@ export function BlogIndex() {
                 <h3 className="mb-2 text-2xl leading-tight font-semibold">
                   <Link
                     className="text-primary-700 decoration-primary-200 hover:text-primary-800 hover:decoration-primary-400 underline"
-                    href={`/blog/${post.slug}`}
+                    href={routes.blogPost.href({ slug: post.slug })}
                   >
                     {post.title}
                   </Link>

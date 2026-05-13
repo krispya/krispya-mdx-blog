@@ -8,27 +8,35 @@ export type PostFrontmatter = {
 
 export type Post = PostFrontmatter & {
   slug: string;
-  Component: ComponentType;
+  loadComponent: () => Promise<ComponentType>;
 };
 
-type PostModule = {
-  default: ComponentType;
-  frontmatter: PostFrontmatter;
-};
-
-const postModules = import.meta.glob<PostModule>('../../../content/posts/*.mdx', {
+const postFrontmatterModules = import.meta.glob<PostFrontmatter>('../../../content/posts/*.mdx', {
   eager: true,
+  import: 'frontmatter',
+});
+
+const postComponentModules = import.meta.glob<ComponentType>('../../../content/posts/*.mdx', {
+  import: 'default',
 });
 
 function slugFromPath(path: string) {
   return path.replace(/^..\/..\/..\/content\/posts\//, '').replace(/\.mdx$/, '');
 }
 
-export const posts: Post[] = Object.entries(postModules)
-  .map(([path, module]) => ({
-    ...module.frontmatter,
+export const posts: Post[] = Object.entries(postFrontmatterModules)
+  .map(([path, frontmatter]) => ({
+    ...frontmatter,
     slug: slugFromPath(path),
-    Component: module.default,
+    loadComponent: async () => {
+      const loadComponent = postComponentModules[path];
+
+      if (!loadComponent) {
+        throw new Error(`Could not find MDX component for ${path}.`);
+      }
+
+      return loadComponent();
+    },
   }))
   .sort((first, second) => Date.parse(second.date) - Date.parse(first.date));
 
